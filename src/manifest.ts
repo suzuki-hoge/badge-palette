@@ -9,6 +9,12 @@ const manifest = defineManifest(async () => ({
   action: {
     default_popup: 'popup/index.html',
   },
+  content_scripts: [
+    {
+      matches: ['https://github.com/*/*/pull/*', 'https://github.com/*/*/issues/*'],
+      js: ['content/index.tsx'],
+    },
+  ],
 }))
 
 export default manifest
