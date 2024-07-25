@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Select from 'react-select'
 import { TwitterPicker } from 'react-color'
 import CreatableSelect from 'react-select/creatable'
@@ -19,6 +19,20 @@ const BadgePalette = () => {
     { value: 'ask', label: 'ask', color: '8ED1FC' },
     { value: 'must', label: 'must', color: 'EB144C' },
   ]
+
+  useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-extra-non-null-assertion
+    const textarea = document.getElementById('new_comment_field')!! as HTMLTextAreaElement
+    const lines = textarea.value.split('\n')
+
+    if (lines[0].startsWith('![](https://img.shields.io/badge')) {
+      lines[0] = `![](${url})`
+    } else {
+      lines.unshift(`![](${url})`)
+    }
+
+    textarea.value = lines.join('\n')
+  }, [url])
 
   return (
     <div className={'component'}>
@@ -64,26 +78,6 @@ const BadgePalette = () => {
           onChange={(color) => setColor(color.hex.replace('#', ''))}
         />
       </div>
-      <img src={url} alt={'badge'} />
-      <button
-        onClick={(e) => {
-          // eslint-disable-next-line @typescript-eslint/no-extra-non-null-assertion
-          const textarea = document.getElementById('new_comment_field')!! as HTMLTextAreaElement
-          const lines = textarea.value.split('\n')
-
-          if (lines[0].startsWith('![](https://img.shields.io/badge')) {
-            lines[0] = `![](${url})`
-          } else {
-            lines.unshift(`![](${url})`)
-          }
-
-          textarea.value = lines.join('\n')
-
-          e.preventDefault()
-        }}
-      >
-        Insert
-      </button>
     </div>
   )
 }
