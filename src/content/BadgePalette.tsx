@@ -2,6 +2,7 @@ import { useState } from 'react'
 import Select from 'react-select'
 import { TwitterPicker } from 'react-color'
 import CreatableSelect from 'react-select/creatable'
+import './badge-palette.css'
 
 const BadgePalette = () => {
   const [label, setLabel] = useState('github')
@@ -20,48 +21,64 @@ const BadgePalette = () => {
   ]
 
   return (
-    <div>
-      <Select
-        defaultValue={{ value: 'github', label: 'github' }}
-        options={labels}
-        onChange={(label) => setLabel(label!.value)}
-      />
-      <CreatableSelect
-        options={messages}
-        onChange={(option) => {
-          setMessage(option!.value)
-          setColor(option!.color)
-        }}
-        styles={{
-          option: (base, { data }) => ({
-            ...base,
-            ...{
-              alignItems: 'center',
-              display: 'flex',
-              ':before': {
-                backgroundColor: `#${data.color}`,
-                borderRadius: 10,
-                content: '" "',
-                display: 'block',
-                marginRight: 8,
-                height: 10,
-                width: 10,
+    <div className={'component'}>
+      <div className={'input'}>
+        <Select
+          className={'input-label'}
+          defaultValue={{ value: 'github', label: 'github' }}
+          options={labels}
+          onChange={(label) => setLabel(label!.value)}
+        />
+        <CreatableSelect
+          className={'input-message'}
+          options={messages}
+          onChange={(option) => {
+            setMessage(option!.value)
+            setColor(option!.color)
+          }}
+          styles={{
+            option: (base, { data }) => ({
+              ...base,
+              ...{
+                alignItems: 'center',
+                display: 'flex',
+                ':before': {
+                  backgroundColor: `#${data.color}`,
+                  borderRadius: 10,
+                  content: '" "',
+                  display: 'block',
+                  marginRight: 8,
+                  height: 10,
+                  width: 10,
+                },
               },
-            },
-          }),
-        }}
-        formatCreateLabel={(input) => input}
-      />
-      <TwitterPicker
-        color={color}
-        triangle={'hide'}
-        onChange={(color) => setColor(color.hex.replace('#', ''))}
-      />
+            }),
+          }}
+          formatCreateLabel={(input) => input}
+        />
+        <TwitterPicker
+          className={'input-color'}
+          color={color}
+          triangle={'hide'}
+          styles={{ default: { input: { display: 'none' }, hash: { display: 'none' } } }}
+          onChange={(color) => setColor(color.hex.replace('#', ''))}
+        />
+      </div>
       <img src={url} alt={'badge'} />
-      <p>{url}</p>
       <button
         onClick={(e) => {
-          console.log(url)
+          // eslint-disable-next-line @typescript-eslint/no-extra-non-null-assertion
+          const textarea = document.getElementById('new_comment_field')!! as HTMLTextAreaElement
+          const lines = textarea.value.split('\n')
+
+          if (lines[0].startsWith('![](https://img.shields.io/badge')) {
+            lines[0] = `![](${url})`
+          } else {
+            lines.unshift(`![](${url})`)
+          }
+
+          textarea.value = lines.join('\n')
+
           e.preventDefault()
         }}
       >
