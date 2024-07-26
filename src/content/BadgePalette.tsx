@@ -5,10 +5,16 @@ import SelectBase from 'react-select/base'
 
 import './badge-palette.css'
 
+export interface Label {
+  value: string
+  label: string
+}
+
 interface Props {
   textareaId: string
   left: number
   top: number
+  labels: Label[]
   unmount: () => void
 }
 
@@ -18,11 +24,6 @@ const BadgePalette = (props: Props) => {
   const [color, setColor] = useState('white')
   const url = `https://img.shields.io/badge/${label}-${message}-${color}?style=plastic&logo=${label}&logoColor=white`
 
-  const labels = [
-    { value: 'github', label: 'github' },
-    { value: 'springboot', label: 'springboot' },
-    { value: 'kotlin', label: 'kotlin' },
-  ]
   const messages = [
     { value: 'ask', label: 'ask', color: '8ED1FC' },
     { value: 'must', label: 'must', color: 'EB144C' },
@@ -42,7 +43,7 @@ const BadgePalette = (props: Props) => {
     textarea.value = lines.join('\n')
   }, [props.textareaId, url])
 
-  const ref = useRef<SelectBase<{ value: string; label: string }>>(null)
+  const ref = useRef<SelectBase<Label>>(null)
   useEffect(() => {
     if (ref.current) ref.current.focus()
   }, [ref])
@@ -61,9 +62,9 @@ const BadgePalette = (props: Props) => {
       <div className={'badge-palette-input'}>
         <CreatableSelect
           classNamePrefix={'badge-palette-label'}
-          options={labels}
+          options={props.labels}
           onChange={(label) => setLabel(label?.value || '')}
-          formatCreateLabel={(input) => input}
+          formatCreateLabel={(input) => `${input} ( no logo )`}
           isClearable
           ref={ref}
         />

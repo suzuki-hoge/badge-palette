@@ -1,8 +1,10 @@
 import { createRoot } from 'react-dom/client'
-import BadgePalette from './BadgePalette.tsx'
+import BadgePalette, { Label } from './BadgePalette.tsx'
 
 const element = document.createElement('div')
 document.body.appendChild(element)
+
+const labels = await fetchLabels()
 
 document.body.addEventListener('keydown', (e) => {
   if (e.ctrlKey && e.code === 'Space') {
@@ -23,6 +25,7 @@ document.body.addEventListener('keydown', (e) => {
           textareaId={textareaId}
           left={left}
           top={top + height + 16}
+          labels={labels}
           unmount={() => root.unmount()}
         />,
       )
@@ -31,3 +34,17 @@ document.body.addEventListener('keydown', (e) => {
     }
   }
 })
+
+async function fetchLabels(): Promise<Label[]> {
+  const md = await fetch(
+    'https://raw.githubusercontent.com/simple-icons/simple-icons/master/slugs.md',
+  )
+  const text = await md.text()
+  const values = text
+    .split('\n')
+    .filter((line) => line.startsWith('|'))
+    .slice(2)
+    .map((line) => line.split('|')[2].replace(/`/g, '').trim())
+
+  return values.map((value) => ({ value, label: value }))
+}
