@@ -1,11 +1,19 @@
-import { useEffect, useState } from 'react'
-import Select from 'react-select'
+import { useEffect, useRef, useState } from 'react'
 import { TwitterPicker } from 'react-color'
 import CreatableSelect from 'react-select/creatable'
+import SelectBase from 'react-select/base'
+
 import './badge-palette.css'
 
-const BadgePalette = () => {
-  const [label, setLabel] = useState('github')
+interface Props {
+  textareaId: string
+  left: number
+  top: number
+  unmount: () => void
+}
+
+const BadgePalette = (props: Props) => {
+  const [label, setLabel] = useState('')
   const [message, setMessage] = useState('')
   const [color, setColor] = useState('white')
   const url = `https://img.shields.io/badge/${label}-${message}-${color}?style=plastic&logo=${label}&logoColor=white`
@@ -22,7 +30,7 @@ const BadgePalette = () => {
 
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-extra-non-null-assertion
-    const textarea = document.getElementById('new_comment_field')!! as HTMLTextAreaElement
+    const textarea = document.getElementById(props.textareaId)!! as HTMLTextAreaElement
     const lines = textarea.value.split('\n')
 
     if (lines[0].startsWith('![](https://img.shields.io/badge')) {
@@ -32,24 +40,41 @@ const BadgePalette = () => {
     }
 
     textarea.value = lines.join('\n')
-  }, [url])
+  }, [props.textareaId, url])
+
+  const ref = useRef<SelectBase<{ value: string; label: string }>>(null)
+  useEffect(() => {
+    if (ref.current) ref.current.focus()
+  }, [ref])
 
   return (
-    <div className={'component'}>
-      <div className={'input'}>
-        <Select
-          className={'input-label'}
-          defaultValue={{ value: 'github', label: 'github' }}
+    <div
+      className={'badge-palette-component'}
+      style={{ position: 'absolute', left: `${props.left}px`, top: `${props.top}px` }}
+      onKeyDown={(e) => {
+        if (e.code === 'Escape') {
+          props.unmount()
+          e.preventDefault()
+        }
+      }}
+    >
+      <div className={'badge-palette-input'}>
+        <CreatableSelect
+          classNamePrefix={'badge-palette-label'}
           options={labels}
-          onChange={(label) => setLabel(label!.value)}
+          onChange={(label) => setLabel(label?.value || '')}
+          formatCreateLabel={(input) => input}
+          isClearable
+          ref={ref}
         />
         <CreatableSelect
-          className={'input-message'}
+          classNamePrefix={'badge-palette-message'}
           options={messages}
           onChange={(option) => {
-            setMessage(option!.value)
-            setColor(option!.color)
+            setMessage(option?.value || '')
+            setColor(option?.color || '')
           }}
+          formatCreateLabel={(input) => input}
           styles={{
             option: (base, { data }) => ({
               ...base,
@@ -68,11 +93,10 @@ const BadgePalette = () => {
               },
             }),
           }}
-          formatCreateLabel={(input) => input}
         />
         <TwitterPicker
-          className={'input-color'}
           color={color}
+          width={'385px'}
           triangle={'hide'}
           styles={{ default: { input: { display: 'none' }, hash: { display: 'none' } } }}
           onChange={(color) => setColor(color.hex.replace('#', ''))}

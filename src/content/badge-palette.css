@@ -1,19 +1,17 @@
-.input {
-  width: 100%;
-  padding: 0 8px;
+.badge-palette-component {
+  background-color: white;
+  width: 409px;
+  padding: 12px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.5);
+}
+
+.badge-palette-input {
   display: flex;
-  flex-direction: row;
-  column-gap: 1rem;
+  flex-direction: column;
+  row-gap: 1rem;
 }
 
-.input-label {
-  flex: 1;
-}
-
-.input-message {
-  flex: 1;
-}
-
-.input-color {
+.input > div {
   flex: 1;
 }
