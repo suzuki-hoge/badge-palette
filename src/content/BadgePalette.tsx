@@ -4,11 +4,8 @@ import CreatableSelect from 'react-select/creatable'
 import SelectBase from 'react-select/base'
 
 import './badge-palette.css'
-
-export interface Label {
-  value: string
-  label: string
-}
+import { Label, Message } from '../component/data.ts'
+import DotMessage from '../component/DotMessage.tsx'
 
 interface Props {
   textareaId: string
@@ -25,8 +22,8 @@ const BadgePalette = (props: Props) => {
   const url = `https://img.shields.io/badge/${label}-${message}-${color}?style=plastic&logo=${label}&logoColor=white`
 
   const messages = [
-    { value: 'ask', label: 'ask', color: '8ED1FC' },
-    { value: 'must', label: 'must', color: 'EB144C' },
+    { id: 'foo', value: 'ask', label: 'ask', color: '8ED1FC' },
+    { id: 'foo', value: 'must', label: 'must', color: 'EB144C' },
   ]
 
   useEffect(() => {
@@ -43,10 +40,12 @@ const BadgePalette = (props: Props) => {
     textarea.value = lines.join('\n')
   }, [props.textareaId, url])
 
-  const ref = useRef<SelectBase<Label>>(null)
+  const labelRef = useRef<SelectBase<Label>>(null)
   useEffect(() => {
-    if (ref.current) ref.current.focus()
-  }, [ref])
+    if (labelRef.current) labelRef.current.focus()
+  }, [labelRef])
+
+  const messageRef = useRef<SelectBase<Message>>(null)
 
   return (
     <div
@@ -61,39 +60,23 @@ const BadgePalette = (props: Props) => {
     >
       <div className={'badge-palette-input'}>
         <CreatableSelect
-          classNamePrefix={'badge-palette-label'}
           options={props.labels}
-          onChange={(label) => setLabel(label?.value || '')}
+          onChange={(label) => {
+            setLabel(label?.value || '')
+            messageRef.current!.focus()
+          }}
           formatCreateLabel={(input) => `${input} ( no logo )`}
-          isClearable
-          ref={ref}
+          ref={labelRef}
         />
         <CreatableSelect
-          classNamePrefix={'badge-palette-message'}
           options={messages}
-          onChange={(option) => {
-            setMessage(option?.value || '')
-            setColor(option?.color || '')
+          onChange={(message) => {
+            setMessage(message?.value || '')
+            setColor(message?.color || 'white')
           }}
           formatCreateLabel={(input) => input}
-          styles={{
-            option: (base, { data }) => ({
-              ...base,
-              ...{
-                alignItems: 'center',
-                display: 'flex',
-                ':before': {
-                  backgroundColor: `#${data.color}`,
-                  borderRadius: 10,
-                  content: '" "',
-                  display: 'block',
-                  marginRight: 8,
-                  height: 10,
-                  width: 10,
-                },
-              },
-            }),
-          }}
+          formatOptionLabel={(input) => <DotMessage message={input} />}
+          ref={messageRef}
         />
         <TwitterPicker
           color={color}

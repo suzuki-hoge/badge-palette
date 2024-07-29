@@ -15,6 +15,7 @@ const manifest = defineManifest(async () => ({
       js: ['content/index.tsx'],
     },
   ],
+  permissions: ['storage'],
 }))
 
 export default manifest

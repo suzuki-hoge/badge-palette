@@ -1,0 +1,55 @@
+.option-edit-component {
+  width: 204px;
+  padding: 1rem;
+}
+
+.option-edit-component > p {
+  font-size: 1.5rem;
+  margin: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.option-edit-component button {
+  width: 70px;
+  background-color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.option-edit-component button span {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  column-gap: 0.3rem;
+  align-items: center;
+  padding: 0.1rem 0.2rem;
+}
+
+.option-edit-items {
+  margin: 1rem 0;
+}
+
+.option-edit-item {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  font-size: 1.2rem;
+  height: 1.2rem;
+}
+
+.option-edit-inputs {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+}
+
+.option-edit-inputs > input {
+  width: 100%;
+  border-radius: 5px;
+  font-size: 1.2rem;
+  padding: 1px 0.3rem;
+}

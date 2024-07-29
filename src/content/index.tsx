@@ -11,10 +11,7 @@ document.body.addEventListener('keydown', (e) => {
     const active = document.activeElement
     const parent = active?.parentNode as HTMLElement
 
-    if (
-      active?.tagName.toLowerCase() === 'textarea' &&
-      parent.classList.contains('CommentBox-container')
-    ) {
+    if (active?.tagName.toLowerCase() === 'textarea' && parent.classList.contains('CommentBox-container')) {
       const left = active.getBoundingClientRect().left + window.scrollX
       const top = active.getBoundingClientRect().top + window.scrollY
       const height = active.getBoundingClientRect().height
@@ -36,9 +33,7 @@ document.body.addEventListener('keydown', (e) => {
 })
 
 async function fetchLabels(): Promise<Label[]> {
-  const md = await fetch(
-    'https://raw.githubusercontent.com/simple-icons/simple-icons/master/slugs.md',
-  )
+  const md = await fetch('https://raw.githubusercontent.com/simple-icons/simple-icons/master/slugs.md')
   const text = await md.text()
   const values = text
     .split('\n')

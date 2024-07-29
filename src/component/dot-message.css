@@ -1,0 +1,13 @@
+.dot-message-component {
+  display: flex;
+  flex-direction: row;
+  column-gap: 0.5rem;
+  align-items: center;
+}
+
+.dot-message-dot {
+  display: block;
+  border-radius: 50%;
+  width: 0.8rem;
+  height: 0.8rem;
+}
