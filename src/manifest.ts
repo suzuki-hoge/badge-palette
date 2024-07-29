@@ -6,8 +6,20 @@ const manifest = defineManifest(async () => ({
   name: 'Badge Palette',
   description: 'GitHub でバッヂを入力するポップアップをひらく',
   version,
+  icons: {
+    '16': 'image/logo.png',
+    '32': 'image/logo.png',
+    '48': 'image/logo.png',
+    '128': 'image/logo.png',
+  },
   action: {
     default_popup: 'popup/index.html',
+    default_icon: {
+      '16': 'image/logo.png',
+      '32': 'image/logo.png',
+      '48': 'image/logo.png',
+      '128': 'image/logo.png',
+    },
   },
   content_scripts: [
     {
