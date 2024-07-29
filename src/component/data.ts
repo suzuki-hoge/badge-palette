@@ -11,7 +11,7 @@ export interface Message {
 }
 
 export function dumpMessages(messages: Message[]): string {
-  return messages.map((message) => `${message.id}:${message.value}:${message.color}`).join('\n')
+  return messages.map((message) => `${message.id}:${message.color}:${message.value}`).join('\n')
 }
 
 export function loadMessages(lines: string): Message[] {
@@ -20,6 +20,6 @@ export function loadMessages(lines: string): Message[] {
     .filter((line) => line.trim().length !== 0)
     .map((line) => {
       const cols = line.split(':')
-      return { id: cols[0], value: cols[1], label: cols[1], color: cols[2] }
+      return { id: cols[0], value: cols[2], label: cols[2], color: cols[1] }
     })
 }

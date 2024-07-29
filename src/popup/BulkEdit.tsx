@@ -36,7 +36,7 @@ const BulkEdit = (props: Props) => {
           </span>
         </button>
       </p>
-      <textarea value={lines} onChange={(e) => setLines(e.target.value)} />
+      <textarea value={lines} rows={props.messages.length + 12} onChange={(e) => setLines(e.target.value)} />
     </div>
   )
 }
