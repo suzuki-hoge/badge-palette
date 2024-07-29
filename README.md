@@ -1,30 +1,85 @@
-# React + TypeScript + Vite
+# Badge Palette
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+<img src="./doc/logo-border.png" alt="logo" width="150px">
 
-Currently, two official plugins are available:
+GitHub のテキストエリアで [badge](https://shields.io/badges/static-badge) が挿入できるポップアップをひらく Chrome 拡張です。
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## スクリーンショット
 
-## Expanding the ESLint configuration
+### 使用例
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+1️⃣ テキストエリア編集中に `ctrl + Space` でポップアップをひらく
 
-- Configure the top-level `parserOptions` property like this:
+![capture1](./doc/capture1.png)
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json', './tsconfig.app.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+2️⃣ 入力してプレビュー
+
+![capture2](./doc/capture2.png)
+
+### 選択肢の設定
+
+1️⃣ ブラウザ URL バー付近の Chrome 拡張アイコンをクリック
+
+<img src="./doc/icon-guide.jpg" alt="icon" height="60px">
+
+2️⃣ 選択肢を編集
+
+<img src="./doc/capture3.png" alt="capture3" width="300px">
+
+3️⃣ テキストによる一括編集も可能
+
+<img src="./doc/bulk.png" alt="bulk" width="300px">
+
+✏️ フォーマット
+
+```
+random-string:color-hex:text
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+🎨 サンプル
+
+```
+b83ab59d:eb144c:must
+10b8b58a:fcb900:ask
+c2fef737:9900EF:imo
+9fc06b2b:abb8c3:nits
+2614b25f:00D084:good
+23234714:8ed1fc:tweet
+bb8b9991:f78da7:suggest
+```
+
+## インストール
+
+ストアには公開していません。ご利用はご自身の責任で行ってください。
+
+1️⃣ 本番ビルドをダウンロード ( もしくは下部手順でビルド )
+
+2️⃣ 拡張機能ページ ( `chrome://extensions` ) をひらく
+
+3️⃣ `デベロッパーモード` の `パッケージ化されていない拡張機能を読み込む` ボタンをクリック
+
+![chrome](./doc/chrome-guide.jpg)
+
+4️⃣ ダウンロードもしくはビルドした `dist` ディレクトリを選択
+
+## 開発者向け
+
+### 開発ビルド
+
+開発サーバの起動と `dist` ディレクトリの作成
+
+```
+$ yarn dev
+```
+
+ホットリロードします。
+
+開発サーバを起動していないと拡張機能は動作しません。
+
+### 本番ビルド
+
+`dist` ディレクトリの作成
+
+```
+$ yarn build
+```
