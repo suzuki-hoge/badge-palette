@@ -16,6 +16,7 @@ export default defineConfig({
   publicDir: resolve(__dirname, 'public'),
   build: {
     outDir: resolve(__dirname, 'dist'),
+    emptyOutDir: true
   },
   plugins: [react(), crx({ manifest })],
 });

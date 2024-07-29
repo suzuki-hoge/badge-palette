@@ -8,5 +8,6 @@ export async function storeMessages(messages: Message[]) {
 }
 
 export async function restoreMessages(): Promise<Message[]> {
-  return await bucket.get('values').then((object) => object.values)
+  const keys = await bucket.getKeys()
+  return keys.includes('values') ? await bucket.get('values').then(object => object.values) : []
 }

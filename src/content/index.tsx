@@ -6,7 +6,7 @@ import { restoreMessages } from '../store/MessageStore.ts'
 const element = document.createElement('div')
 document.body.appendChild(element)
 
-const labels = await fetchLabels()
+const labels = fetchLabels()
 
 document.body.addEventListener('keydown', (e) => {
   if (e.ctrlKey && e.code === 'Space') {
@@ -19,7 +19,7 @@ document.body.addEventListener('keydown', (e) => {
       const height = active.getBoundingClientRect().height
       const root = createRoot(element)
       const textareaId = active.id
-      restoreMessages().then((messages) =>
+      Promise.all([labels, restoreMessages()]).then(([labels, messages]) =>
         root.render(
           <BadgePalette
             textareaId={textareaId}
