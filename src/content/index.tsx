@@ -1,5 +1,7 @@
 import { createRoot } from 'react-dom/client'
-import BadgePalette, { Label } from './BadgePalette.tsx'
+import BadgePalette from './BadgePalette.tsx'
+import { Label } from '../component/data.ts'
+import { restoreMessages } from '../store/MessageStore.ts'
 
 const element = document.createElement('div')
 document.body.appendChild(element)
@@ -17,14 +19,17 @@ document.body.addEventListener('keydown', (e) => {
       const height = active.getBoundingClientRect().height
       const root = createRoot(element)
       const textareaId = active.id
-      root.render(
-        <BadgePalette
-          textareaId={textareaId}
-          left={left}
-          top={top + height + 16}
-          labels={labels}
-          unmount={() => root.unmount()}
-        />,
+      restoreMessages().then((messages) =>
+        root.render(
+          <BadgePalette
+            textareaId={textareaId}
+            left={left}
+            top={top + height + 16}
+            labels={labels}
+            messages={messages}
+            unmount={() => root.unmount()}
+          />,
+        ),
       )
     } else {
       // do nothing

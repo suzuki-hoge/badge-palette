@@ -12,6 +12,7 @@ interface Props {
   left: number
   top: number
   labels: Label[]
+  messages: Message[]
   unmount: () => void
 }
 
@@ -20,11 +21,6 @@ const BadgePalette = (props: Props) => {
   const [message, setMessage] = useState('')
   const [color, setColor] = useState('white')
   const url = `https://img.shields.io/badge/${label}-${message}-${color}?style=plastic&logo=${label}&logoColor=white`
-
-  const messages = [
-    { id: 'foo', value: 'ask', label: 'ask', color: '8ED1FC' },
-    { id: 'foo', value: 'must', label: 'must', color: 'EB144C' },
-  ]
 
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-extra-non-null-assertion
@@ -69,7 +65,7 @@ const BadgePalette = (props: Props) => {
           ref={labelRef}
         />
         <CreatableSelect
-          options={messages}
+          options={props.messages}
           onChange={(message) => {
             setMessage(message?.value || '')
             setColor(message?.color || 'white')
