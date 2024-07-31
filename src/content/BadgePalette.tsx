@@ -34,6 +34,12 @@ const BadgePalette = (props: Props) => {
     }
 
     textarea.value = lines.join('\n')
+
+    const buttons = [...(textarea.closest('form')?.querySelectorAll('div.form-actions button') || [])].map(
+      (e) => e as HTMLButtonElement,
+    )
+
+    buttons.forEach((button) => (button.disabled = false))
   }, [props.textareaId, label, url])
 
   const labelRef = useRef<SelectBase<Label>>(null)
