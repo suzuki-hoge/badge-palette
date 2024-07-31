@@ -27,14 +27,14 @@ const BadgePalette = (props: Props) => {
     const textarea = document.getElementById(props.textareaId)!! as HTMLTextAreaElement
     const lines = textarea.value.split('\n')
 
-    if (lines[0].startsWith('![](https://img.shields.io/badge')) {
-      lines[0] = `![](${url})`
+    if (lines[0].match(/^!\[.*]\(https:\/\/img.shields.io\/badge/)) {
+      lines[0] = `![${label}](${url})`
     } else {
-      lines.unshift(`![](${url})`)
+      lines.unshift(`![${label}](${url})`)
     }
 
     textarea.value = lines.join('\n')
-  }, [props.textareaId, url])
+  }, [props.textareaId, label, url])
 
   const labelRef = useRef<SelectBase<Label>>(null)
   useEffect(() => {
