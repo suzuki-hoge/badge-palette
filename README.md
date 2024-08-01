@@ -54,6 +54,8 @@ bb8b9991:f78da7:suggest
 
 1️⃣ 本番ビルドをダウンロード ( もしくは下部手順でビルド )
 
+[suzuki-hoge/badge-palette/releases](https://github.com/suzuki-hoge/badge-palette/releases/tag/1.0.0)
+
 2️⃣ 拡張機能ページ ( `chrome://extensions` ) をひらく
 
 3️⃣ `デベロッパーモード` の `パッケージ化されていない拡張機能を読み込む` ボタンをクリック
