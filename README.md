@@ -10,11 +10,11 @@ GitHub のテキストエリアで [badge](https://shields.io/badges/static-badg
 
 1️⃣ テキストエリア編集中に `ctrl + Space` でポップアップをひらく
 
-![capture1](./doc/capture1.png)
+![capture1](./doc/select.png)
 
-2️⃣ 入力してプレビュー
+2️⃣ 色まで決まるととじるのでプレビューする
 
-![capture2](./doc/capture2.png)
+![capture2](./doc/preview.png)
 
 ### 選択肢の設定
 
@@ -24,7 +24,7 @@ GitHub のテキストエリアで [badge](https://shields.io/badges/static-badg
 
 2️⃣ 選択肢を編集
 
-<img src="./doc/capture3.png" alt="capture3" width="300px">
+<img src="./doc/saved.png" alt="capture3" width="300px">
 
 3️⃣ テキストによる一括編集も可能
 
@@ -46,6 +46,7 @@ c2fef737:9900EF:imo
 2614b25f:00D084:good
 23234714:8ed1fc:tweet
 bb8b9991:f78da7:suggest
+a316ae90:7bdcb5:please
 ```
 
 ## インストール

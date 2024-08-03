@@ -19,7 +19,7 @@ interface Props {
 const BadgePalette = (props: Props) => {
   const [label, setLabel] = useState('')
   const [message, setMessage] = useState('')
-  const [color, setColor] = useState('white')
+  const [color, setColor] = useState('')
   const url = `https://img.shields.io/badge/${label}-${message}-${color}?style=plastic&logo=${label}&logoColor=white`
 
   useEffect(() => {
@@ -49,6 +49,10 @@ const BadgePalette = (props: Props) => {
 
   const messageRef = useRef<SelectBase<Message>>(null)
 
+  useEffect(() => {
+    color && props.unmount()
+  }, [color, props])
+
   return (
     <div
       className={'badge-palette-component'}
@@ -74,7 +78,7 @@ const BadgePalette = (props: Props) => {
           options={props.messages}
           onChange={(message) => {
             setMessage(message?.value || '')
-            setColor(message?.color || 'white')
+            setColor(message?.color || '')
           }}
           formatCreateLabel={(input) => input}
           formatOptionLabel={(input) => <DotMessage message={input} />}
