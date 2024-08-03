@@ -50,8 +50,8 @@ const BadgePalette = (props: Props) => {
   const messageRef = useRef<SelectBase<Message>>(null)
 
   useEffect(() => {
-    color && props.unmount()
-  }, [color, props])
+    message && color && props.unmount()
+  }, [message, color, props])
 
   return (
     <div

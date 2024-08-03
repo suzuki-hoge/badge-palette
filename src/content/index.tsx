@@ -14,11 +14,12 @@ document.body.addEventListener('keydown', (e) => {
     const parent = active?.parentNode as HTMLElement
 
     if (active?.tagName.toLowerCase() === 'textarea' && parent.classList.contains('CommentBox-container')) {
-      const left = active.getBoundingClientRect().left + window.scrollX
-      const top = active.getBoundingClientRect().top + window.scrollY
-      const height = active.getBoundingClientRect().height
+      const textarea = active as HTMLTextAreaElement
+      const left = textarea.getBoundingClientRect().left + window.scrollX
+      const top = textarea.getBoundingClientRect().top + window.scrollY
+      const height = textarea.getBoundingClientRect().height
       const root = createRoot(element)
-      const textareaId = active.id
+      const textareaId = textarea.id
       Promise.all([labels, restoreMessages()]).then(([labels, messages]) =>
         root.render(
           <BadgePalette
@@ -27,7 +28,10 @@ document.body.addEventListener('keydown', (e) => {
             top={top + height + 16}
             labels={labels}
             messages={messages}
-            unmount={() => root.unmount()}
+            unmount={() => {
+              root.unmount()
+              textarea.focus()
+            }}
           />,
         ),
       )
