@@ -8,38 +8,18 @@ document.body.appendChild(element)
 
 const labels = fetchLabels()
 
-document.body.addEventListener('keydown', (e) => {
-  if (e.ctrlKey && e.code === 'Space') {
-    const active = document.activeElement
-    const parent = active?.parentNode as HTMLElement
+const textareaId = 'new_comment_field'
+const textarea = document.getElementById(textareaId) as HTMLTextAreaElement
+const left = textarea.getBoundingClientRect().left + window.scrollX
+const top = textarea.getBoundingClientRect().top + window.scrollY
+const height = textarea.getBoundingClientRect().height
+const root = createRoot(element)
 
-    if (active?.tagName.toLowerCase() === 'textarea' && parent.classList.contains('CommentBox-container')) {
-      const textarea = active as HTMLTextAreaElement
-      const left = textarea.getBoundingClientRect().left + window.scrollX
-      const top = textarea.getBoundingClientRect().top + window.scrollY
-      const height = textarea.getBoundingClientRect().height
-      const root = createRoot(element)
-      const textareaId = textarea.id
-      Promise.all([labels, restoreMessages()]).then(([labels, messages]) =>
-        root.render(
-          <BadgePalette
-            textareaId={textareaId}
-            left={left}
-            top={top + height + 16}
-            labels={labels}
-            messages={messages}
-            unmount={() => {
-              root.unmount()
-              textarea.focus()
-            }}
-          />,
-        ),
-      )
-    } else {
-      // do nothing
-    }
-  }
-})
+Promise.all([labels, restoreMessages()]).then(([labels, messages]) =>
+  root.render(
+    <BadgePalette textareaId={textareaId} left={left} top={top + height + 16} labels={labels} messages={messages} />,
+  ),
+)
 
 async function fetchLabels(): Promise<Label[]> {
   const md = await fetch('https://raw.githubusercontent.com/simple-icons/simple-icons/master/slugs.md')
