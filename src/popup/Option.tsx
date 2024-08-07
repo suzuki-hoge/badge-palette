@@ -5,6 +5,7 @@ import { restoreMessages } from '../store/MessageStore.ts'
 import { Message } from '../component/data.ts'
 import Edit from './Edit.tsx'
 import BulkEdit from './BulkEdit.tsx'
+import KeyConfigInput from './KeyConfigInput.tsx'
 
 const Option = () => {
   const [isBulk, setIsBulk] = useState(false)
@@ -14,10 +15,15 @@ const Option = () => {
     restoreMessages().then((messages) => setMessages(messages))
   }, [])
 
-  return isBulk ? (
-    <BulkEdit messages={messages} setMessages={setMessages} setIsBulk={setIsBulk} />
-  ) : (
-    <Edit messages={messages} setMessages={setMessages} setIsBulk={setIsBulk} />
+  return (
+    <>
+      <KeyConfigInput />
+      {isBulk ? (
+        <BulkEdit messages={messages} setMessages={setMessages} setIsBulk={setIsBulk} />
+      ) : (
+        <Edit messages={messages} setMessages={setMessages} setIsBulk={setIsBulk} />
+      )}
+    </>
   )
 }
 export default Option

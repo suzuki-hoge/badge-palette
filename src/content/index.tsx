@@ -1,43 +1,52 @@
 import { createRoot } from 'react-dom/client'
 import BadgePalette from './BadgePalette.tsx'
-import { Label } from '../component/data.ts'
+import { createPreview, Label, match } from '../component/data.ts'
 import { restoreMessages } from '../store/MessageStore.ts'
+import { restoreKeyConfig } from '../store/KeyConfigStore.ts'
 
 const element = document.createElement('div')
 document.body.appendChild(element)
 
 const labels = fetchLabels()
 
-document.body.addEventListener('keydown', (e) => {
-  if (e.ctrlKey && e.code === 'Space') {
-    const active = document.activeElement
-    const parent = active?.parentNode as HTMLElement
+restoreKeyConfig().then((keyConfig) => {
+  if (keyConfig) {
+    console.log(`Badge Palette: Found key config. push [ ${createPreview(keyConfig)} ] key on <textarea>.`)
 
-    if (active?.tagName.toLowerCase() === 'textarea' && parent.classList.contains('CommentBox-container')) {
-      const textarea = active as HTMLTextAreaElement
-      const left = textarea.getBoundingClientRect().left + window.scrollX
-      const top = textarea.getBoundingClientRect().top + window.scrollY
-      const height = textarea.getBoundingClientRect().height
-      const root = createRoot(element)
-      const textareaId = textarea.id
-      Promise.all([labels, restoreMessages()]).then(([labels, messages]) =>
-        root.render(
-          <BadgePalette
-            textareaId={textareaId}
-            left={left}
-            top={top + height + 16}
-            labels={labels}
-            messages={messages}
-            unmount={() => {
-              root.unmount()
-              textarea.focus()
-            }}
-          />,
-        ),
-      )
-    } else {
-      // do nothing
-    }
+    document.body.addEventListener('keydown', (e) => {
+      if (match(keyConfig, e)) {
+        const active = document.activeElement
+        const parent = active?.parentNode as HTMLElement
+
+        if (active?.tagName.toLowerCase() === 'textarea' && parent.classList.contains('CommentBox-container')) {
+          const textarea = active as HTMLTextAreaElement
+          const left = textarea.getBoundingClientRect().left + window.scrollX
+          const top = textarea.getBoundingClientRect().top + window.scrollY
+          const height = textarea.getBoundingClientRect().height
+          const root = createRoot(element)
+          const textareaId = textarea.id
+          Promise.all([labels, restoreMessages()]).then(([labels, messages]) =>
+            root.render(
+              <BadgePalette
+                textareaId={textareaId}
+                left={left}
+                top={top + height + 16}
+                labels={labels}
+                messages={messages}
+                unmount={() => {
+                  root.unmount()
+                  textarea.focus()
+                }}
+              />,
+            ),
+          )
+        } else {
+          // do nothing
+        }
+      }
+    })
+  } else {
+    console.log('Badge Palette: Missing key config. Please set up key config.')
   }
 })
 
