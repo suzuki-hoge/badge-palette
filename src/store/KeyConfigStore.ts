@@ -7,7 +7,16 @@ export async function storeKeyConfig(keyConfig: KeyConfig) {
   await bucket.set(keyConfig)
 }
 
-export async function restoreKeyConfig(): Promise<KeyConfig | null> {
+export async function restoreKeyConfig(): Promise<KeyConfig> {
   const keys = await bucket.getKeys()
-  return keys.length !== 0 ? await bucket.get() : null
+  return keys.length !== 0
+    ? await bucket.get()
+    : {
+        key: 'b',
+        code: 'KeyB',
+        ctrl: true,
+        shift: false,
+        alt: false,
+        meta: false,
+      }
 }

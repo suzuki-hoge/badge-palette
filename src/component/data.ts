@@ -30,7 +30,7 @@ export function loadMessages(lines: string): Message[] {
     .split('\n')
     .filter((line) => line.trim().length !== 0)
     .map((line) => {
-      const cols = line.split(':')
+      const cols = line.trim().split(':')
       return { id: cols[0], value: cols[2], label: cols[2], color: cols[1] }
     })
 }

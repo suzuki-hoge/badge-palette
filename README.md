@@ -40,13 +40,13 @@ random-string:color-hex:text
 
 ```
 b83ab59d:eb144c:must
-10b8b58a:fcb900:ask
-c2fef737:9900EF:imo
+a316ae90:f78da7:should
+07600fd1:fcb900:suggest
 9fc06b2b:abb8c3:nits
+c2fef737:7bdcb5:imo
+25d6a61a:ff6900:ask
 2614b25f:00D084:good
 23234714:8ed1fc:tweet
-bb8b9991:f78da7:suggest
-a316ae90:7bdcb5:please
 ```
 
 ## インストール
