@@ -8,7 +8,7 @@ GitHub のテキストエリアで [badge](https://shields.io/badges/static-badg
 
 ### 使用例
 
-1️⃣ テキストエリア編集中に `ctrl + Space` でポップアップをひらく
+1️⃣ テキストエリア編集中に `Control + b` でポップアップをひらく
 
 ![capture1](./doc/select.png)
 
@@ -16,17 +16,23 @@ GitHub のテキストエリアで [badge](https://shields.io/badges/static-badg
 
 ![capture2](./doc/preview.png)
 
-### 選択肢の設定
+### 設定
 
 1️⃣ ブラウザ URL バー付近の Chrome 拡張アイコンをクリック
 
 <img src="./doc/icon-guide.jpg" alt="icon" height="60px">
 
-2️⃣ 選択肢を編集
+<img src="./doc/popup.png" alt="capture3" width="300px">
 
-<img src="./doc/saved.png" alt="capture3" width="300px">
+2️⃣ キーコンフィグを変更
 
-3️⃣ テキストによる一括編集も可能
+任意のキーを設定する
+
+3️⃣ 選択肢を編集
+
+テキストと色を選択して追加
+
+テキストによる一括編集も可能
 
 <img src="./doc/bulk.png" alt="bulk" width="300px">
 
