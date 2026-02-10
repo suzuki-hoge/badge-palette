@@ -12,13 +12,11 @@ const labels = fetchLabels()
 restoreKeyConfig().then((keyConfig) => {
   console.log(`Badge Palette: Found key config. Push [ ${createPreview(keyConfig)} ] key on <textarea>.`)
 
-  document.body.addEventListener('keydown', (e) => {
+  document.addEventListener('keydown', (e) => {
     if (match(keyConfig, e)) {
       const active = document.activeElement
-      const parent = active?.parentNode as HTMLElement
 
-      const isTextarea = active?.tagName.toLowerCase() === 'textarea'
-      if (isTextarea && (parent.classList.contains('CommentBox-container') || active?.closest('form.js-inline-comment-form'))) {
+      if (active?.tagName.toLowerCase() === 'textarea') {
         const textarea = active as HTMLTextAreaElement
         const left = textarea.getBoundingClientRect().left + window.scrollX
         const top = textarea.getBoundingClientRect().top + window.scrollY
@@ -40,13 +38,11 @@ restoreKeyConfig().then((keyConfig) => {
             />,
           ),
         )
-      } else if (isTextarea) {
-        console.error('Badge Palette: Parent is not .CommentBox-container and no ancestor form.js-inline-comment-form found. GitHub UI may have changed.')
       } else {
         console.log('Badge Palette: Active element is not a <textarea>')
       }
     }
-  })
+  }, true)
 })
 
 async function fetchLabels(): Promise<Label[]> {
