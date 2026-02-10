@@ -30,7 +30,7 @@
 - If you add tests, document the framework and commands here and keep test files next to code (e.g. `src/popup/__tests__/` or `*.test.tsx`).
 
 ## Commit & Pull Request Guidelines
-- Recent commits use short, lowercase, action-first messages like `update 1.2.1`.
+- Recent commits use short, lowercase, action-first messages like `update 1.3.0`.
 - Keep commits focused and include version bumps when updating releases.
 - PRs should include: a short summary, screenshots for UI changes, and a note on manual testing (e.g. “loaded `dist/` in `chrome://extensions` and verified popup”).
 
