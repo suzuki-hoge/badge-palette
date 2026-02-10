@@ -33,7 +33,13 @@ const BadgePalette = (props: Props) => {
       lines.unshift(`![${label}](${url})`)
     }
 
-    textarea.value = lines.join('\n')
+    // React が管理する textarea は直接 .value を書き換えても onChange が発火しない。
+    // native setter 経由で設定し、input イベントを dispatch する。
+    const nativeInputValueSetter = Object.getOwnPropertyDescriptor(
+      window.HTMLTextAreaElement.prototype, 'value'
+    )!.set!
+    nativeInputValueSetter.call(textarea, lines.join('\n'))
+    textarea.dispatchEvent(new Event('input', { bubbles: true }))
 
     const buttons = [...(textarea.closest('form')?.querySelectorAll('div.form-actions button') || [])].map(
       (e) => e as HTMLButtonElement,
