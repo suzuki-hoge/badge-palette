@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { TwitterPicker } from 'react-color'
+import ColorSwatches from '../component/ColorSwatches.tsx'
 import CreatableSelect from 'react-select/creatable'
 import SelectBase from 'react-select/base'
 
@@ -84,12 +84,10 @@ const BadgePalette = (props: Props) => {
           formatOptionLabel={(input) => <DotMessage message={input} />}
           ref={messageRef}
         />
-        <TwitterPicker
+        <ColorSwatches
           color={color}
           width={'385px'}
-          triangle={'hide'}
-          styles={{ default: { input: { display: 'none' }, hash: { display: 'none' } } }}
-          onChange={(color) => setColor(color.hex.replace('#', ''))}
+          onChange={(color) => setColor(color)}
         />
       </div>
     </div>

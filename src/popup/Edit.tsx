@@ -8,7 +8,7 @@ import { FiPlusCircle } from 'react-icons/fi'
 import DotMessage from '../component/DotMessage.tsx'
 import { Message } from '../component/data.ts'
 import { RiDeleteBin2Line, RiFileEditLine } from 'react-icons/ri'
-import { TwitterPicker } from 'react-color'
+import ColorSwatches from '../component/ColorSwatches.tsx'
 
 interface Props {
   messages: Message[]
@@ -66,11 +66,10 @@ const Edit = (props: Props) => {
         </div>
 
         <input type={'input'} value={value} placeholder={'new message'} onChange={(e) => setValue(e.target.value)} />
-        <TwitterPicker
+        <ColorSwatches
           color={color}
           width={'204px'}
-          triangle={'hide'}
-          onChange={(color) => setColor(color.hex.replace('#', ''))}
+          onChange={(color) => setColor(color)}
         />
       </div>
     </div>
